@@ -19,5 +19,5 @@ writeFile(targetPath, environmentFileContent, function (err: any) {
    if (err) {
       console.log(err);
    }
-   console.log(`Wrote variables to ${targetPath}`);
+   console.log(`Target Path: ${targetPath}`);
 });
