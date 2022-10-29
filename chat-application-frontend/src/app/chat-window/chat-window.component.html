@@ -15,18 +15,19 @@
       <ng-container *ngIf="messages.length !== 0">
         <div *ngFor="let message of messages">
           <ng-container *ngIf="!message.getBelongstogroup()">
-            <div class="col-12 mb-2" *ngIf="message.getFrom() === toUser.id">
+            <div class="col-12 mb-2" *ngIf="toUser !== null && message.getFrom() === toUser.id">
               {{toUser.name}} : {{message.getMessage()}}
             </div>
-            <div class="col-12 mb-2" *ngIf="message.getFrom() === fromUser.id">
+            <div class="col-12 mb-2" *ngIf="fromUser !== null && message.getFrom() === fromUser.id">
               You : {{message.getMessage()}}
             </div>  
           </ng-container>
           <ng-container *ngIf="message.getBelongstogroup()">
-            <div class="col-12 mb-2" *ngIf="message.getFrom() !== fromUser.id && message.getTo() === group.id">
+            <div class="col-12 mb-2" *ngIf="fromUser !== null && group !== null && 
+            message.getFrom() !== fromUser.id && message.getTo() === group.id">
               {{userNames.get(message.getFrom())}} : {{message.getMessage()}}
             </div>
-            <div class="col-12 mb-2" *ngIf="message.getFrom() === fromUser.id">
+            <div class="col-12 mb-2" *ngIf="fromUser !== null && message.getFrom() === fromUser.id">
               You : {{message.getMessage()}}
             </div>   
           </ng-container>

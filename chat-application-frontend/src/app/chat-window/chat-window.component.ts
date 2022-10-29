@@ -21,10 +21,10 @@ export class ChatWindowComponent implements OnInit {
   @ViewChild('chatWindowModal')
   chatWindowModal: TemplateRef<any>;
 
-  toUser: User;
-  group: {id: string, name: string};
+  toUser: User | null;
+  group: {id: string, name: string} | null;
   messages: ChatMessage[];
-  fromUser: User;
+  fromUser: User | null;
   userNames: Map<string, string> = new Map<string,string>();
 
   constructor(private modalService: NgbModal, private chatService: ChatApiService, private fb: FormBuilder) {
@@ -67,13 +67,17 @@ export class ChatWindowComponent implements OnInit {
 
   send() {
     let message = new ChatMessage();
-    message.setFrom(this.fromUser.id);
+
+    if (this.fromUser) {
+      message.setFrom(this.fromUser.id);
+    }
+    
     message.setMessage(this.chatForm.value.message);
     
     if (this.group) {
       message.setTo(this.group.id);
       message.setBelongstogroup(true);  
-    } else {
+    } else if (this.toUser){
       message.setTo(this.toUser.id);
       message.setBelongstogroup(false);
 
@@ -85,7 +89,11 @@ export class ChatWindowComponent implements OnInit {
   }
 
   close() {
+    this.toUser = null;
+    this.group = null;
     this.messages = [];
+    this.fromUser = null;
+    this.userNames = new Map<string, string>();
     this.modalService.dismissAll();
     this.chatWindowClosed.emit();
   }
