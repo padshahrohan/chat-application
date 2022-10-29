@@ -37,11 +37,7 @@ public class ChatController extends ChatServiceGrpc.ChatServiceImplBase {
     @Override
     public void receiveMessages(UserId user, StreamObserver<ChatMessage> responseObserver) {
 
-        System.out.println(undeliveredMessages);
         activeReceivers.put(user.getId(), responseObserver);
-
-        System.out.println(isIterativeServer);
-        System.out.println(Thread.currentThread().getName());
         if (isIterativeServer) {
             undeliveredMessages.stream()
                     .filter(m -> m.getTo().equalsIgnoreCase(user.getId()))
@@ -58,7 +54,6 @@ public class ChatController extends ChatServiceGrpc.ChatServiceImplBase {
             messagesToDeliver.forEach(responseObserver::onNext);
             undeliveredMessages.removeAll(messagesToDeliver);
         }
-        System.out.println(activeReceivers);
     }
 
     @Override
@@ -74,8 +69,6 @@ public class ChatController extends ChatServiceGrpc.ChatServiceImplBase {
         responseObserver.onNext(Empty.getDefaultInstance());
         responseObserver.onCompleted();
 
-        System.out.println(activeReceivers);
-        System.out.println(undeliveredMessages);
     }
 
     @Override
