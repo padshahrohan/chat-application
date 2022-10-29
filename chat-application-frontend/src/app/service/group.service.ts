@@ -7,7 +7,7 @@ import { environment } from "src/environments/environment";
 })
 export class GroupService {
 
-    url = environment.httpUrl;
+    url = environment.httpUrl + "/";
     
     constructor(private http: HttpClient) { }
 

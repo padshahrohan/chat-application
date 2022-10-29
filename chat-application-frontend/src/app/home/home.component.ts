@@ -75,14 +75,13 @@ export class HomeComponent implements OnInit {
           if (unreadMessages !== undefined) {
             this.unReadUserMessages.set(chatWindowId, unreadMessages+1);
           } else {
-            this.refreshUsers();
+            if (message.getBelongstogroup()) {
+              this.refreshGroups();
+            } else {
+              this.refreshUsers();
+            }
             this.unReadUserMessages.set(chatWindowId, 1);
           }
-        }
-
-        if (message.getBelongstogroup() && this.unReadUserMessages.get(chatWindowId) === undefined) {
-          this.refreshGroups();
-          this.unReadUserMessages.set(chatWindowId, 1);
         }
       }
     })

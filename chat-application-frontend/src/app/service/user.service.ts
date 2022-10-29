@@ -9,7 +9,7 @@ import { User } from "src/models/user.model";
 })
 export class UserService {
 
-    url = environment.httpUrl;
+    url = environment.httpUrl + "/";
     currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>({id: "", name: ""});
     currentUserObs$ = this.currentUserSubject.asObservable();
     
