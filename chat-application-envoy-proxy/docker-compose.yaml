@@ -1,0 +1,19 @@
+version: '3.7'
+
+networks:
+  default:
+  outside:
+  grpcmesh:
+
+services:
+  proxy:
+    image: envoyproxy/envoy:v1.23-latest
+    environment:
+      NODE_ENV: development
+    ports:
+      - 1337:1337
+    networks:
+      - outside
+      - grpcmesh
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml

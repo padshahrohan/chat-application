@@ -1,0 +1,54 @@
+<ng-template #chatWindowModal let-modal>
+
+  <div class="modal-content dark">
+    <div class="modal-header">
+      <h5 class="modal-title">Chat with {{(toUser && toUser.name) || (group && group.name)}}</h5>
+        <button type="button" class="button-outline close" data-dismiss="modal" aria-label="Close" (click)="close()"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <ng-container *ngIf="messages.length === 0">
+        Start Chat....
+      </ng-container>
+      
+      <ng-container *ngIf="messages.length !== 0">
+        <div *ngFor="let message of messages">
+          <ng-container *ngIf="!message.getBelongstogroup()">
+            <div class="col-12 mb-2" *ngIf="message.getFrom() === toUser.id">
+              {{toUser.name}} : {{message.getMessage()}}
+            </div>
+            <div class="col-12 mb-2" *ngIf="message.getFrom() === fromUser.id">
+              You : {{message.getMessage()}}
+            </div>  
+          </ng-container>
+          <ng-container *ngIf="message.getBelongstogroup()">
+            <div class="col-12 mb-2" *ngIf="message.getFrom() !== fromUser.id && message.getTo() === group.id">
+              {{userNames.get(message.getFrom())}} : {{message.getMessage()}}
+            </div>
+            <div class="col-12 mb-2" *ngIf="message.getFrom() === fromUser.id">
+              You : {{message.getMessage()}}
+            </div>   
+          </ng-container>
+        </div>
+      </ng-container>
+      
+    </div>
+    
+    <form [formGroup]="chatForm">
+      <div class="modal-footer">
+        <div class="form-group mb-2 col-10 pl-0">
+          <input type="text" class="form-control" formControlName = "message">
+        </div>
+        <div>
+          <button type="submit" class="btn btn-outline-light" [disabled]="chatForm.invalid" (click)="send()">Send</button>
+      
+        </div>
+        
+      </div>
+    </form>
+  </div>
+    
+  
+  </ng-template>
+  

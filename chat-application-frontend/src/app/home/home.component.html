@@ -1,0 +1,68 @@
+
+<div class="homeHeading mt-1">
+    <div class="d-flex col-12  mb-auto" >
+        <div class="mr-auto text-center">
+            <h3 >
+                Welcome {{currentUser.name}}
+            </h3>
+        </div>
+        <button type="button" class="btn btn-outline-light btn-sm mr-2" (click) ="createGroup()"><i class="bi bi-person-plus mr-1"></i> Create Group</button>
+        <button type="button" class="btn btn-outline-light btn-sm" (click) ="logOut()"><i class="bi bi-box-arrow-right mr-1"></i> Log Out</button>
+    </div>
+</div>
+<div class="col-16 mb-auto">
+    <div class="homeForm">
+        <h4 class="mb-auto ml-3"><i class="bi bi-person mr-1"></i>Users</h4>
+    </div>
+    
+    <table class="table table-hover table-dark mb-auto">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Unread Messages</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; index as i">
+                <td>{{ i + 1 }}</td>
+                <td >
+                    {{ user.name }}
+                </td>
+                <td>{{ unReadUserMessages.get(user.id) | number }}</td>
+                <td><button type="button" (click)="openChatWindowWithUser(user)" class="btn btn-outline-light">Start Chat</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <div class="col-16">
+        <div class="homeForm">
+            <h3 class="mb-auto ml-3"><i class="bi bi-people mr-2"></i>Groups</h3>
+        </div>
+       
+        <table class="table table-hover table-dark">
+            <thead >
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Unread Messages</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let group of groups; index as i">
+                    <td>{{ i + 1 }}</td>
+                    <td >
+                        {{ group.name }}
+                    </td>
+                    <td>{{ unReadUserMessages.get(group.id) | number }}</td>
+                    <td><button type="button" (click)="openChatWindowWithGroup(group)" class="btn btn-outline-light">Start Chat</button></td>
+                </tr>
+            </tbody>
+        </table>
+        
+</div>
+
+<app-chat-window #chatWindowModal [users]="users" (chatWindowClosed)="chatWindowActiveWith = undefined;"></app-chat-window>
+<app-create-group #createGroupModal [currentUser]="currentUser" (createdGroup)="refreshGroups()"></app-create-group>

@@ -1,0 +1,12 @@
+.button-outline {
+    outline: none !important;
+}
+
+.dark {
+    background-color: #343a40;
+    color: white;
+}
+
+.font-large {
+    font-size: larger;
+}
