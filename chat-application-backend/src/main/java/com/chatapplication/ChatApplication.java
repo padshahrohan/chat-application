@@ -14,7 +14,7 @@ public class ChatApplication {
 		String ip = serverConfiguration[1].split("=")[1].toLowerCase();
 
 		Properties properties = new Properties();
-		if (serverType.equals("iterative")) {
+		if (serverType.equalsIgnoreCase("iterative")) {
 			System.out.println("Starting in iterative mode");
 			properties.put("server.tomcat.threads.max", "1");
 			properties.put("server.tomcat.max-connections", "1");
