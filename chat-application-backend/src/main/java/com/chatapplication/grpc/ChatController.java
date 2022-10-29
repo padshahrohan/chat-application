@@ -30,7 +30,6 @@ public class ChatController extends ChatServiceGrpc.ChatServiceImplBase {
     @Autowired
     public ChatController(@Value("${myserver.iterative}") boolean isIterativeServer, GroupService groupService) {
         this.groupService = groupService;
-        System.out.println(isIterativeServer);
         this.isIterativeServer = isIterativeServer;
     }
 
