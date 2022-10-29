@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_USERNAME: "sa"
+      SA_PASSWORD: "Projects@123"
+    ports:
+      - "1433:1433"

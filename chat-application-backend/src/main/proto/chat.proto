@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.chatapplication";
+option java_outer_classname = "ChatProto";
+
+import "google/protobuf/empty.proto";
+
+service ChatService {
+  rpc ReceiveMessages (UserId) returns (stream ChatMessage) {}
+  rpc SendMessage (ChatMessage) returns (google.protobuf.Empty) {}
+  rpc RemoveStream (UserId) returns (google.protobuf.Empty) {}
+}
+
+message ChatMessage {
+  string message = 1;
+  string from = 2;
+  string to = 3;
+  bool belongsToGroup = 4;
+}
+
+message UserId {
+  string id = 1;
+}
